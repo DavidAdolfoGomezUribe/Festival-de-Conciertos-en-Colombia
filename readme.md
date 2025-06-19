@@ -144,3 +144,33 @@ db.presentaciones.aggregate([  { $group: {  _id: null, promedioDuracion: { $avg:
 - Crear una función llamada escenariosPorCiudad(ciudad) que devuelva todos los escenarios en esa ciudad.
 
 
+```javascript
+db.system.js.insertOne({_id: "escenariosPorCiudad", value:new Code ("function (genero) {var a = db.bandas.find({ genero: genero },{nombre:1});  return a;}" )});
+
+const f1 = db.system.js.findOne({_id:"escenariosPorCiudad"})
+
+const escenarios = new Function("return "+f1.value.code)();
+
+escenarios("Cali")
+```
+
+- Respuesta de consola
+
+![alt text](image-8.png)
+
+
+- Crear una función llamada bandasPorGenero(genero) que devuelva todas las bandas activas de ese género.
+
+```javascript
+db.system.js.insertOne({_id: "bandasPorGenero", value:new Code ("function (genero) {const a = db.bandas.find({ genero: genero },{nombre:1});  return a;}" )});
+
+const f2 = db.system.js.findOne({_id:"bandasPorGenero"});
+
+const generos = new Function("return "+f2.value.code)();
+
+generos("Rock")
+```
+
+- Respuesta de consola
+
+![alt text](image-9.png)
