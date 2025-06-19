@@ -130,3 +130,17 @@ db.asistentes.find({generos_favoritos:{$in:["Rock"]}})
 - Respuesta de consola 
 
 ![alt text](image-6.png)
+
+- Calcular el promedio de duración de las presentaciones.
+```javascript
+db.presentaciones.aggregate([  { $group: {  _id: null, promedioDuracion: { $avg: "$duracion_minutos" } } } ])
+```
+- Respuesta de consola
+
+![alt text](image-7.png)
+
+### Funciones en system.js
+
+- Crear una función llamada escenariosPorCiudad(ciudad) que devuelva todos los escenarios en esa ciudad.
+
+
