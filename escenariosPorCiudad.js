@@ -1,6 +1,2 @@
-function escenariosPorCiudad(ciudad){
-
-    const ciudad = db.escenarios.find({ciudad:ciudad})
-
-
-}
+function escenariosPorCiudad(ciudad) { const a = db.escenarios.findOne({ ciudad: ciudad }); return a.nombre }
+db.system.js.insertOne({_id: "escenariosPorCiudad",value: function(ciudad) {const a = db.escenarios.findOne({ ciudad: ciudad }); return a ? a.nombre : "No hay disponibles para esta ciudad";} });
