@@ -174,3 +174,86 @@ generos("Rock")
 - Respuesta de consola
 
 ![alt text](image-9.png)
+
+
+### Transacciones (requiere replica set)
+
+- Insertar nuevo boleto en boletos_comprados de un asistente.
+
+```javascript
+const session = db.getMongo().startSession();
+const dbSession = session.getDatabase("asistentes");
+session.startTransaction();
+
+try {
+
+    function agregarAsistente() {
+    const nuevoAsistente = {
+        nombre: "Ana Torres",
+        edad: 31,
+        ciudad: "Cartagena",
+        generos_favoritos: ["Cumbia", "Electro Tropical"],
+        boletos_comprados:  [
+            { escenario: "Tarima Caribe", dia: "2025-06-21" },
+            { escenario: "Escenario Alterno", dia: "2025-06-22" }
+  ]
+    };
+
+  db.asistentes.insertOne(nuevoAsistente);
+
+}
+
+    agregarAsistente();
+    print(`Asistente agregado con éxito.`);
+    session.commitTransaction();
+} catch (error) {
+    session.abortTransaction();
+    print("Error:", e);
+}finally{
+    session.endSession();
+    
+}
+```
+- Respuesta de consola
+
+![alt text](image-10.png)
+
+
+- Disminuir en 1 la capacidad del escenario correspondiente.
+```javascript
+const session = db.getMongo().startSession();
+const dbSession = session.getDatabase("escenarios");
+session.startTransaction();
+
+try {
+
+function disminuirCapacidadEscenario() {
+  const resultado = db.escenarios.updateOne(
+    { nombre: "Escenario Principal", capacidad: { $gt: 0 } },
+    { $inc: { capacidad: -1 } }
+    );
+
+    if (resultado.modifiedCount === 1) {
+        print(` Capacidad  disminuida en 1.`);
+    } else {
+        print(` No se pudo disminuir la capacidad.`);
+    }
+    };
+     disminuirCapacidadEscenario();
+    print(`transacion existosa.`);
+    session.commitTransaction();
+} catch (error) {
+    session.abortTransaction();
+    print("Error:", e);
+}finally{
+    session.endSession();
+    
+}
+
+```
+
+
+- Respuesta de consola 
+
+![alt text](image-11.png)
+
