@@ -263,6 +263,7 @@ function disminuirCapacidadEscenario() {
 db.asistentes.deleteOne({ nombre: "Ana Torres" })
 ```
 - Respuesta de consola
+
 ![alt text](image-12.png)
 
 
