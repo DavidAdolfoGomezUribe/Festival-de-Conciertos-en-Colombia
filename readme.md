@@ -303,3 +303,34 @@ function disminuirCapacidadEscenario() {
 - respuesta de consola
 
 ![alt text](image-13.png)
+
+
+### Índices + Consultas
+
+
+- Crear un índice en bandas.nombre y buscar una banda específica por nombre.
+```javascript
+ db.bandas.createIndex({nombre:1})
+```
+- Respuesta de consola
+
+![alt text](image-14.png)
+
+
+- Crear un índice en presentaciones.escenario y hacer una consulta para contar presentaciones de un escenario.
+```javascript
+  db.presentaciones.createIndex({escenario:1})
+ 
+```
+
+- Respuesta de consola
+![alt text](image-15.png)
+
+
+- Crear un índice compuesto en asistentes.ciudad y edad, luego consultar asistentes de Bogotá menores de 30.
+```javascript
+db.asistentes.createIndex({ ciudad: 1, edad: 1 });
+db.asistentes.find({ ciudad: "Bogotá",  edad: { $lt: 30 } }).explain("executionStats");
+```
+- Respuesta de consola
+![alt text](image-16.png)
